@@ -16,3 +16,27 @@ public:
         return prefixSum[right]-prefixSum[left-1];
     }
 };
+
+//Find the pivot index of the array
+
+class Solution {
+public:
+    vector<int>prefix;
+    int pivotIndex(vector<int>& nums) {
+       int sum=0;
+       int n=nums.size();
+       prefix.resize(n);
+       for(int i=0;i<n;i++){
+        prefix[i]=sum+nums[i];
+        sum+=nums[i];
+       }
+       if(sum-nums[0]==0)return 0;
+       for(int i=1;i<=n-2;i++){
+        int leftSum=prefix[i-1];
+        int rightSum=prefix[n-1]-prefix[i];
+        if(leftSum==rightSum)return i;
+       }
+       if(sum-nums[n-1]==0)return n-1;
+       return -1;
+    }
+};
