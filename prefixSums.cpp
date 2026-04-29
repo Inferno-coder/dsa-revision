@@ -40,3 +40,21 @@ public:
        return -1;
     }
 };
+
+//subarray sum equals k
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        map<int,int>countMap;
+        countMap[0]=1;
+        int tot=0,sum=0;
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+            tot+=countMap[sum-k];
+            countMap[sum]++;
+        }
+        return tot;
+    }
+};
