@@ -79,3 +79,24 @@ public:
         return find(nums, goal) - find(nums, goal - 1);
     }
 };
+
+
+//count number of nice substrings
+class Solution {
+public:
+    int atMostKOddValues(vector<int>&nums,int k){
+        int count=0,odd=0,left=0;
+        for(int right=0;right<nums.size();right++){
+            if(nums[right] % 2 != 0) odd++; 
+            while(odd>k && left<=right){
+                if(nums[left]%2!=0)odd--;
+                left++;
+            }
+            count+=right-left+1;
+        }
+        return count;
+    }
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        return atMostKOddValues(nums,k)-atMostKOddValues(nums,k-1);
+    }
+};
