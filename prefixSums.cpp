@@ -58,3 +58,24 @@ public:
         return tot;
     }
 };
+
+//binary subarray with sum
+class Solution {
+public:
+    int find(vector<int> nums, int goal) {
+        if(goal<0) return 0;
+        int currsum = 0, left = 0,count=0;
+        for (int i = 0; i < nums.size(); i++) {
+            currsum += nums[i];
+            while (currsum > goal) {
+                currsum -= nums[left];
+                left++;
+            }
+            count += (i - left + 1);
+        }
+        return count;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        return find(nums, goal) - find(nums, goal - 1);
+    }
+};
