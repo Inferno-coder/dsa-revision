@@ -100,3 +100,19 @@ public:
         return atMostKOddValues(nums,k)-atMostKOddValues(nums,k-1);
     }
 };
+
+// Contiguous Array - maximum length of a contiguous subarray with an equal number of 0 and 1
+ int findMaxLength(vector<int>& nums) {
+        int pre=0,mx=0;
+        map<int,int>sumIndexMap;
+        sumIndexMap[0]=-1;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==0)pre-=1;
+            else pre+=1;
+            if(sumIndexMap.find(pre)!=sumIndexMap.end()){
+                mx=max(mx,i-sumIndexMap[pre]);
+            }
+            else sumIndexMap[pre]=i;
+        }
+        return mx;
+    }
