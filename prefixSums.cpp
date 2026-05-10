@@ -116,3 +116,27 @@ public:
         }
         return mx;
     }
+
+
+// XOR queries of subarray
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        vector<int>pre;
+        int xr=0;
+        for(int i=0;i<arr.size();i++){
+            pre.push_back(arr[i]^xr);
+            xr^=arr[i];
+        }
+        vector<int>res;
+        for(auto it:queries){
+            int start=it[0];
+            int end=it[1];
+            if(start == 0)
+                res.push_back(pre[end]);
+            else
+                res.push_back(pre[end] ^ pre[start - 1]);
+        }
+        return res;
+    }
+};
