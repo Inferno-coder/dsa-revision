@@ -184,3 +184,77 @@ public:
         return pre[row2][col2]-left-top+common;
     }
 };
+
+
+// matrix side length of square
+class Solution {
+public:
+
+    bool isSumPossible(int len,
+                       vector<vector<int>>& mat,
+                       vector<vector<int>>& pre,
+                       int threshold) {
+
+        int n = mat.size();
+        int m = mat[0].size();
+
+        for(int i = 0; i + len <= n; i++) {
+
+            for(int j = 0; j + len <= m; j++) {
+
+                int sum =
+                    pre[i + len][j + len]
+                    - pre[i][j + len]
+                    - pre[i + len][j]
+                    + pre[i][j];
+
+                if(sum <= threshold)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    int maxSideLength(vector<vector<int>>& mat, int threshold) {
+
+        int n = mat.size();
+        int m = mat[0].size();
+
+        int l = 0;
+        int h = min(n, m);
+
+        int ans = 0;
+
+        // (n+1) x (m+1) prefix sum
+        vector<vector<int>> pre(n + 1, vector<int>(m + 1, 0));
+
+        // Build prefix sum
+        for(int i = 1; i <= n; i++) {
+
+            for(int j = 1; j <= m; j++) {
+
+                pre[i][j] =
+                    mat[i - 1][j - 1]
+                    + pre[i][j - 1]
+                    + pre[i - 1][j]
+                    - pre[i - 1][j - 1];
+            }
+        }
+
+        while(l <= h) {
+
+            int mid = l + (h - l) / 2;
+
+            if(isSumPossible(mid, mat, pre, threshold)) {
+                ans = mid;
+                l = mid + 1;
+            }
+            else {
+                h = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+};
