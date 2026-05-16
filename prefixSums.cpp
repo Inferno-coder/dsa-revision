@@ -258,3 +258,22 @@ public:
         return ans;
     }
 };
+
+
+//car pooling
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        vector<int>dest(10001,0);
+        for(auto it:trips){
+            dest[it[1]]+=it[0];
+            dest[it[2]]-=it[0];
+        }
+        int sum=0;
+        for(int i=0;i<10001;i++){
+            sum+=dest[i];
+            if(sum>capacity)return false;
+        }   
+        return true;
+    }
+};
