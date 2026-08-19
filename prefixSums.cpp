@@ -3,7 +3,7 @@ class NumArray {
 public:
     vector<int>prefixSum;
     NumArray(vector<int>& nums) {
-        int sum=0;
+        int sum=0; 
         prefixSum.resize(nums.size(),0);
         for(int i=0;i<nums.size();i++){
           prefixSum[i]=sum+nums[i];
